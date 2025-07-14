@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"; // Keep this import since you'll re-add state logic
 
 const messages = [
   "Learn React ⚛️",
@@ -7,29 +7,30 @@ const messages = [
 ];
 
 export default function App() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); //We can only call useState at the top level!
 
   function handlePrevious() {
-    step > 1 ? setStep(step - 1) : alert("No Previous step available!");
+    if (step > 1) {
+      setStep(step - 1);
+    }
   }
 
   function handleNext() {
-    step < 3 ? setStep(step + 1) : alert("No Next step available!");
+    if (step < 3) {
+      setStep(step + 1);
+    }
   }
 
   return (
     <div className="steps">
       <div className="numbers">
-        <div className={`${step >= 1 ? "active" : ""}`}>1</div>
-        <div className={`${step >= 2 ? "active" : ""}`}>2</div>
-        <div className={`${step >= 3 ? "active" : ""}`}>3</div>
+        <div className={step >= 1 ? "active" : ""}>1</div>
+        <div className={step >= 2 ? "active" : ""}>2</div>
+        <div className={step >= 3 ? "active" : ""}>3</div>
       </div>
 
       <p className="message">
-        {step >= 1 && step <= 3
-          ? `step ${step}: ${messages[step - 1]}`
-          : "Invalid Step!"}
-        ``
+        Step {step} : {messages[step - 1]}
       </p>
 
       <div className="buttons">
@@ -49,3 +50,5 @@ export default function App() {
     </div>
   );
 }
+
+//No DOM MANIPULATION!
